@@ -4,6 +4,7 @@
 
 package com.carl.auth.shiro.client.demo.confg;
 
+import com.carl.auth.shiro.client.demo.realm.shiroRealm;
 import io.buji.pac4j.realm.Pac4jRealm;
 import org.apache.shiro.realm.Realm;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class RealmConfiguration {
     @Bean
     public Realm pac4jRealm() {
-        return new Pac4jRealm();
+        shiroRealm realm=new shiroRealm();
+        return realm ;
     }
 }

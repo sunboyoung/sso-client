@@ -5,10 +5,8 @@
 
 package com.carl.auth.shiro.client.demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2017/9/16
  * @since 1.0.0
  */
-@RestController()
-@RequestMapping("/user")
+@RestController
+@RequestMapping("user")
 public class UserController {
 
 
@@ -27,7 +25,8 @@ public class UserController {
         return "users page:" + id;
     }
 
-    @GetMapping("/detail")
+    @RequestMapping(value="test",method = RequestMethod.GET)
+    @RequiresRoles("zms")
     public Object detail(HttpServletRequest request) {
         //用户详细信息
         return request.getUserPrincipal();
