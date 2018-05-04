@@ -21,6 +21,7 @@ import org.pac4j.cas.config.CasConfiguration;
 import org.pac4j.cas.config.CasProtocol;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -151,7 +152,7 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
      * 对shiro的过滤策略进行明确
      * @return
      */
-    @Bean
+    @Bean(name="shiroFilter")
     protected Map<String, Filter> shiroFilters() {
         //过滤器设置
         Map<String, Filter> filters = new HashMap<>();
@@ -168,35 +169,14 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
         return filters;
     }
 
-    /**
-     * 注册DelegatingFilterProxy（Shiro）
-     *
-     * @param dispatcherServlet
-     * @return
-     * @author SHANHY
-     * @create  2016年1月13日
-     */
+
+
+
+
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
-        filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-        //  该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
-        filterRegistration.addInitParameter("targetFilterLifecycle", "true");
-        filterRegistration.setEnabled(true);
-        filterRegistration.addUrlPatterns("/*");
-        return filterRegistration;
-    }
-    
-    /**
-     * @Author: zms
-     *
-     * @Description: shiro权限控制生命管理周期
-     *
-     * @Date: 2018/5/4 18:15
-     *
-     */
-    @Bean(name = "lifecycleBeanPostProcessor")
-    public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
+    public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator daap = new DefaultAdvisorAutoProxyCreator();
+        daap.setProxyTargetClass(true);
+        return daap;
     }
 }
