@@ -6,6 +6,7 @@
 package com.carl.auth.shiro.client.demo.controller;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.jasig.cas.client.jaas.ServiceAndTicketCallbackHandler;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,15 +21,17 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
 
-    @GetMapping("/{id}")
-    public Object user(@PathVariable(value = "id") String id) {
+    @RequestMapping(value = "test1",method = RequestMethod.GET)
+    @RequiresRoles("zms")
+    public Object user(String id) {
         return "users page:" + id;
     }
 
     @RequestMapping(value="test",method = RequestMethod.GET)
-    @RequiresRoles("zms")
+    @RequiresRoles("1")
     public Object detail(HttpServletRequest request) {
         //用户详细信息
-        return request.getUserPrincipal();
+
+        return null;
     }
 }

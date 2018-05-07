@@ -17,9 +17,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RealmConfiguration {
-    @Bean
-    public Realm pac4jRealm() {
-        shiroRealm realm=new shiroRealm();
-        return realm ;
-    }
+
 }
